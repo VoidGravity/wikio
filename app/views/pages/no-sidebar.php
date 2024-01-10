@@ -7,6 +7,7 @@
     <meta name="author" content="Devcrud">
     <title>Wikio</title>
     <!-- font icons  -->
+    
     <link rel="stylesheet" href="../../../public/vendors/themify-icons/css/themify-icons.css">
     <!-- Bootstrap + JoeBLog main styles -->
 	<link rel="stylesheet" href="../../../public/css/joeblog.css">
@@ -31,53 +32,16 @@
     <!-- End Of First Navigation -->
 
     <!-- Page Second Navigation -->
-    <nav class="navbar custom-navbar navbar-expand-md navbar-light bg-primary sticky-top">
-        <div class="container">
-            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">                     
-                    <li class="nav-item">
-                        <a class="nav-link" href="no-sidebar.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="no-sidebar.html">No Sidebar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="single-post.html">Single Post</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <!-- input search wide -->
-                        <form class="form-inline my-3 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                    </li>
-                </ul>
-                <div class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="components.html" class="ml-4 btn btn-secondary mt-1 btn-sm">Login</a>
-                        <a href="components.html" class="ml-2 btn btn-dark mt-1 btn-sm">Register</a>
-                    </li>
-                </div>
-            </div>
-        </div>
-    </nav>
+    
+    
     <!-- End Of Page Second Navigation -->
     
     <!-- page-header -->
+    <?php 
+   require_once "../inc/nav.html"
+   ?>   
+
+    
     <header class="page-header"></header>
     <!-- end of page header -->
 
@@ -260,17 +224,9 @@
     
 
     <!-- Page Footer -->
-    <footer class="page-footer">
-        <div class="container">
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="col-md-3 text-center text-md-left mb-3 mb-md-0">
-                    <img src="../../../public/imgs/logo.svg" alt="" class="logo">
-                </div>
-                
-            </div>
-            <p class="border-top mb-0 mt-4 pt-3 small">&copy; <script>document.write(new Date().getFullYear())</script>, VoidGravity <a href="https://www.devcrud.com" class="text-muted font-weight-bold" target="_blank">YouCode.</a>  All rights reserved </p> 
-        </div>      
-    </footer>
+    <?php
+    require_once "../inc/footer.html"
+    ?>
     <!-- End of Page Footer -->
     
 	<!-- core  -->

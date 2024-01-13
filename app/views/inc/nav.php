@@ -37,16 +37,18 @@
                 </li>
             </ul>
             <div class="navbar-nav ml-auto">
-                
+
                 <ul>
                     <?php if (isset($_SESSION['user_role'])) : ?>
-                        
-                            <a href="../../controllers/UserController.php?action=logout" class="ml-4 btn btn-secondary mt-1 btn-sm">Logout</a>
-                        
-                        <?php else : ?>
-                            <!-- <li class="nav-item"> -->
-                            <a href="../pages/signIn.php" class="ml-4 btn btn-secondary mt-1 btn-sm">Login</a>
-                            <a href="../pages/signup.php" class="ml-2 btn btn-dark mt-1 btn-sm">Register</a>
+
+                        <a href="../pages/authorWiki.php" class="ml-2 btn btn-dark mt-1 btn-sm">Manage Article</a>
+                        <!-- I'll offer him the option to add and hide articles -->
+                        <a href="../../controllers/UserController.php?action=logout" class="ml-4 btn btn-secondary mt-1 btn-sm">Logout</a>
+
+                    <?php else : ?>
+                        <!-- <li class="nav-item"> -->
+                        <a href="../pages/signIn.php" class="ml-4 btn btn-secondary mt-1 btn-sm">Login</a>
+                        <a href="../pages/signup.php" class="ml-2 btn btn-dark mt-1 btn-sm">Register</a>
                         </li>
                     <?php endif; ?>
                 </ul>

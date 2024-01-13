@@ -91,6 +91,41 @@
     </div>
     <!-- Jumbotron -->
   </section>
+  <script>
+        function validateForm() {
+            var username = document.getElementById('form3Example1').value;
+            var fullName = document.getElementById('form3Example2').value;
+            var email = document.getElementById('form3Example3').value;
+            var password = document.getElementById('form3Example4').value;
+
+            if (username === "" || fullName === "" || email === "" || password === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            //akkdsqld@dskljsdkjf.djk
+            if (!emailPattern.test(email)) {
+                alert("Invalid email address");
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long");
+                return false;
+            }
+
+
+            return true; // ila kolchi valid return true
+        }
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var isValid = validateForm();
+            if (!isValid) {
+                event.preventDefault(); // Prevent submission (pervent the default function of submit event)
+            }
+        });
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 

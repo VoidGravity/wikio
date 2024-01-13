@@ -38,7 +38,7 @@
     
     <!-- page-header -->
     <?php 
-   require_once "../inc/nav.html"
+   require_once "../inc/nav.php"
    ?>   
 
     

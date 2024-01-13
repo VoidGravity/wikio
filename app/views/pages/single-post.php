@@ -17,7 +17,7 @@
 
     <!-- Page Second Navigation -->
     <?php
-    require_once "../inc/nav.html"
+    require_once "../inc/nav.php"
     ?>
     <!-- End Of Page Second Navigation -->
 

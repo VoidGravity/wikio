@@ -1,10 +1,13 @@
+<?php session_start();
+?>
+
 <nav class="navbar custom-navbar navbar-expand-md navbar-light bg-primary sticky-top">
     <div class="container">
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">                     
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="no-sidebar.html">Home</a>
                 </li>
@@ -34,11 +37,21 @@
                 </li>
             </ul>
             <div class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="components.html" class="ml-4 btn btn-secondary mt-1 btn-sm">Login</a>
-                    <a href="components.html" class="ml-2 btn btn-dark mt-1 btn-sm">Register</a>
-                </li>
+                
+                <ul>
+                    <?php if (isset($_SESSION['user_role'])) : ?>
+                        
+                            <a href="../../controllers/UserController.php?action=logout" class="ml-4 btn btn-secondary mt-1 btn-sm">Logout</a>
+                        
+                        <?php else : ?>
+                            <!-- <li class="nav-item"> -->
+                            <a href="../pages/signIn.php" class="ml-4 btn btn-secondary mt-1 btn-sm">Login</a>
+                            <a href="../pages/signup.php" class="ml-2 btn btn-dark mt-1 btn-sm">Register</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
             </div>
+
         </div>
     </div>
 </nav>

@@ -1,81 +1,80 @@
 <?php
+include '../model/article.php';
+// include 'app\model\Article.php';
+include '../helpers/functions.php';
 
-class Article {
-    private $conn;
-    public $id;
-    public $title;
-    public $content;
-    public $author_id;
-    public $created_at;
-    public $updated_at;
+class ArticleController {
+    private $articleModel;
+  
 
     public function __construct($db) {
-        $this->conn = $db;
+        $this->articleModel = new ArticleModel($db);
     }
 
     // Method to create an article
     public function create() {
-        $query = "INSERT INTO articles (title, content, author_id) VALUES (:title, :content, :author_id)";
-        $stmt = $this->conn->prepare($query);
-
-        // Sanitize inputs
-        $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->content = htmlspecialchars(strip_tags($this->content));
-        $this->author_id = htmlspecialchars(strip_tags($this->author_id));
-
-        // Bind parameters
-        $stmt->bindParam(":title", $this->title);
-        $stmt->bindParam(":content", $this->content);
-        $stmt->bindParam(":author_id", $this->author_id);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
-    }
-    // Method to read an article
-    public function read() {
-        $query = "SELECT * FROM articles WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-
-        // Sanitize input
-        $this->id = htmlspecialchars(strip_tags($this->id));
-
-        // Bind parameter
-        $stmt->bindParam(":id", $this->id);
-
-        $stmt->execute();
-        $article = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($article) {
-            return $article;
-        } else {
-            return null;
-        }
-    }
-    // Method to update an article
-    public function update() {
-        $query = "UPDATE articles SET title = :title, content = :content WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-
-        // Sanitize and bind parameters
-        $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->content = htmlspecialchars(strip_tags($this->content));
-        $this->id = htmlspecialchars(strip_tags($this->id));
-
-        $stmt->bindParam(":title", $this->title);
-        $stmt->bindParam(":content", $this->content);
-        $stmt->bindParam(":id", $this->id);
-
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['createArticle'])) {
+            // It's assumed that you have a separate sanitize function to handle input data
+            $title = sanitize($_POST['title']);
+            $content = sanitize($_POST['content']);
+            $author_id = sanitize($_POST['author_id']);
+            $category_id = sanitize($_POST['CategorieId']);
+            $tags = array_map('sanitize', $_POST['tags']); // Apply the sanitize function to each tag
+    
+            $result = $this->articleModel->create($title, $content, $author_id, $category_id, $tags);
+    
+            if ($result) {
+                header('Location: ../index.php?status=success');
+            } else {
+                header('Location: ../index.php?status=error');
+            }
         }
     }
     
-
-
+    public function read($id) {
+        $id = sanitize($id);
+        $article = $this->articleModel->read($id);
+    
+        if ($article) {
+            return $article;
+        } else {
+            header('Location: ../index.php?status=notfound');
+        }
+    }
+    
+    public function update() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateArticle'])) {
+            $id = sanitize($_POST['id']);
+            $title = sanitize($_POST['title']);
+            $content = sanitize($_POST['content']);
+            $category_id = sanitize($_POST['CategorieId']);
+    
+            $result = $this->articleModel->update($id, $title, $content, $category_id);
+    
+            if ($result) {
+                header('Location: ../index.php?status=updatesuccess');
+            } else {
+                header('Location: ../index.php?status=updateerror');
+            }
+        }
+    }
+    public function getCategoriesForView() {
+        return $this->articleModel->getCategories();
+    }
+    
+    public function delete() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteArticle'])) {
+            $id = sanitize($_POST['id']);
+    
+            $result = $this->articleModel->delete($id);
+    
+            if ($result) {
+                header('Location: ../index.php?status=deletesuccess');
+            } else {
+                header('Location: ../index.php?status=deleteerror');
+            }
+        }
+    }
 
     // Methods for read, update, and delete operations
     // ...

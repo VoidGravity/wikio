@@ -178,14 +178,27 @@
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
+                    <?php
+
+                    require_once '../../controllers/wikiController.php';
+                    ?>
                     <!-- Create Wiki Form -->
-                    <form method="post" action="path_to_your_controller.php">
+                    <form method="post" action="handle_form.php">
                         <input type="text" name="title" placeholder="Title" required>
                         <textarea name="content" placeholder="Content" required></textarea>
                         <input type="hidden" name="author_id" value="author_id_here"> <!-- Use a session or another method to get the author_id -->
                         <select name="CategorieId" required>
-                            <!-- Populate categories -->
+                            <?php
+                            $categories = $article->getCategoriesForView();
+
+                            $categories = $articleController->getCategoriesForView();
+                            foreach ($categories as $category) {
+                                echo "<option value='" . htmlspecialchars($category['id']) . "'>" . htmlspecialchars($category['name']) . "</option>";
+                            }
+                            ?>
                         </select>
+
+
                         <select name="tags[]" multiple required>
                             <!-- Populate tags -->
                         </select>
@@ -194,7 +207,7 @@
 
                     <div class="row">
                         <div class="col-sm-8">
-                            <h2>Employee <b>Details</b></h2>
+                            <h2>Wiki <b>Details</b></h2>
                         </div>
                         <div class="col-sm-4">
                             <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
@@ -204,9 +217,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Phone</th>
+                            <th>Wiki Title</th>
+                            <th>Wiki content</th>
+                            <th>Wiki tags</th>
+                            <th>Wiki category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

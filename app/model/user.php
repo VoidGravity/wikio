@@ -60,6 +60,7 @@ class User
             return null;
         }
     }
+    
     public function getUserRole($username) {
         $query = "SELECT role FROM users WHERE username = :username";
 

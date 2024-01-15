@@ -20,6 +20,7 @@ class UserController
             $this->userModel->password = $_POST['password'];
             $this->userModel->email = $_POST['email'];
             $this->userModel->role = "username";
+            $this->userModel->Authorid = "username";
 
             $result = $this->userModel->register();
 
@@ -46,6 +47,8 @@ class UserController
 
                 if ($result) {
                     $_SESSION['user_role'] = $result['role'];
+                    $_SESSION['user_id'] = $user['id'];
+
                     // Redirect and stop script execution
                     header("Location: ../views/pages/no-sidebar.php");
                     exit();

@@ -116,60 +116,7 @@
             display: none;
         }
     </style>
-    <script>
-        $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
-            // Append table with add row form on add new button click
-            $(".add-new").click(function() {
-                $(this).attr("disabled", "disabled");
-                var index = $("table tbody tr:last-child").index();
-                var row = '<tr>' +
-                    '<td><input type="text" class="form-control" name="name" id="name"></td>' +
-                    '<td><input type="text" class="form-control" name="department" id="department"></td>' +
-                    '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
-                    '<td>' + actions + '</td>' +
-                    '</tr>';
-                $("table").append(row);
-                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-            // Add row on add button click
-            $(document).on("click", ".add", function() {
-                var empty = false;
-                var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function() {
-                    if (!$(this).val()) {
-                        $(this).addClass("error");
-                        empty = true;
-                    } else {
-                        $(this).removeClass("error");
-                    }
-                });
-                $(this).parents("tr").find(".error").first().focus();
-                if (!empty) {
-                    input.each(function() {
-                        $(this).parent("td").html($(this).val());
-                    });
-                    $(this).parents("tr").find(".add, .edit").toggle();
-                    $(".add-new").removeAttr("disabled");
-                }
-            });
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function() {
-                $(this).parents("tr").find("td:not(:last-child)").each(function() {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
-            });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function() {
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
-            });
-        });
-    </script>
+
 </head>
 
 <body>
@@ -182,60 +129,15 @@
 
 
                     <!-- Create Wiki Form -->
-                    <form method="post" action="../../controllers/wikiController.php">
-                        <input type="text" name="title" placeholder="Title" required>
-                        <textarea name="content" placeholder="Content" required></textarea>
-                        <textarea name="addDescription" placeholder="Description" required></textarea>
-                        <input type="hidden" name="author_id" value="author_id_here"> <!-- Use a session or another method to get the author_id -->
-
-                        <select name="CategorieId" required>
-                            <?php
-                            //   //     /////    ::    ::   
-                            //   //   //    //   ::    ::
-                            //      //    //   ::    ::
-                            //      //    //   ::    ::
-                            //       /////      ::::::
-
-                            require_once '../../controllers/wikiController.php';
-                            $articleController = new ArticleController($db);
-
-                            $categories = $articleController->getCategoriesForView();
-                            foreach ($categories as $category) {
-                                echo "<option value='" . htmlspecialchars($category['id']) . "'>" . htmlspecialchars($category['Nom']) . "</option>";
-                            }
-                            var_dump($categories);
-                            ?>
-
-                        </select>
-
-
-                        <select name="tags[]" required>
-                            <?php
-                            //   //     /////    ::    ::   
-                            //   //   //    //   ::    ::
-                            //      //    //   ::    ::
-                            //      //    //   ::    ::
-                            //       /////      ::::::
-
-                            require_once '../../controllers/wikiController.php';
-                            // $articleController = new ArticleController($db);
-
-                            $tags = $articleController->getTagforView();
-                            foreach ($tags as $tag) {
-                                echo "<option value='" . htmlspecialchars($tag['id']) . "'>" . htmlspecialchars($tag['Nom']) . "</option>";
-                            }
-                            var_dump($categories);
-                            ?>
-                        </select>
-                        <button type="submit" name="createArticle">Create Wiki</button>
-                    </form>
+                    
 
                     <div class="row">
                         <div class="col-sm-8">
                             <h2>Wiki <b>Details</b></h2>
                         </div>
                         <div class="col-sm-4">
-                            <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                            <a href="authorAddWiki.php"class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -245,41 +147,33 @@
                             <th>Wiki Title</th>
                             <th>Wiki content</th>
                             <th>Wiki tags</th>
+                            <th>Wiki description</th>
                             <th>Wiki category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                        require_once '../../controllers/wikiController.php';
+                        $Thewiki = new ArticleController();
+                        $wikis = $Thewiki->getNoSideBarData();
+                        foreach ($wikis["articlesCrud"] as $wiki) { ?>
                         <tr>
-                            <td>John Doe</td>
-                            <td>Administration</td>
-                            <td>(171) 555-2222</td>
+                            <td><?=$wiki["title"]?></td>
+                            <td><?=$wiki["content"]?></td>
+                            <td><?=$wiki["tagName"]?></td>
+                            <td><?=$wiki["description"]?></td>
+                            <td><?=$wiki["Nom"]?></td>
                             <td>
-                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                <!-- <a></a> -->
+                                <!-- <a class="add" title="Add" data-toggle="tooltip"  href=""><i class="material-icons">&#xE03B;</i></a> -->
+                                <a  href="editeAuthorWiki.php?EAWid=<?=$wiki["id"]?>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <a href="../../controllers/wikiController.php?DAWid=<?=$wiki["id"]?>" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Peter Parker</td>
-                            <td>Customer Service</td>
-                            <td>(313) 555-5735</td>
-                            <td>
-                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Fran Wilson</td>
-                            <td>Human Resources</td>
-                            <td>(503) 555-9931</td>
-                            <td>
-                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
+                        <?php }?>
+
+
                     </tbody>
                 </table>
             </div>

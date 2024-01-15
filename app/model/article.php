@@ -90,7 +90,7 @@ class ArticleModel extends Database
 
     public function delete($id)
     {
-        $query = "DELETE FROM articles WHERE id = :id";
+        $query = "DELETE FROM wikis WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
 
@@ -106,6 +106,12 @@ class ArticleModel extends Database
     }
     public function getArticles () {
         $query = "SELECT * FROM `wikis` JOIN categories ON wikis.id = categories.id ORDER BY `wikis`.`CategorieId` ASC LIMIT 4";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getCrudArticles () {
+        $query = "SELECT *,tags.Nom tagName FROM wikis JOIN categories ON wikis.id = categories.id JOIN wikitag ON wikis.id = wikitag.WikiId JOIN tags on wikis.id= tags.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

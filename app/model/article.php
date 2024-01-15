@@ -3,8 +3,8 @@ require_once "connection.php";
 
 class ArticleModel extends Database
 {
-    
-    public function create($title, $content,$description, $author_id, $category_id, $tags)
+
+    public function create($title, $content, $description, $author_id, $category_id, $tags)
     {
         try {
             $this->conn->beginTransaction();
@@ -49,7 +49,7 @@ class ArticleModel extends Database
     }
     public function getCategories()
     {
-        $query = "SELECT * FROM categories"; 
+        $query = "SELECT * FROM categories";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
@@ -90,33 +90,46 @@ class ArticleModel extends Database
 
     public function delete($id)
     {
-        $query = "DELETE FROM wikis WHERE id = :id";
+
+        $query = "DELETE FROM wikitag WHERE WikiId = :id";
         $stmt = $this->conn->prepare($query);
-
-
         $id = htmlspecialchars(strip_tags($id));
         $stmt->bindParam(":id", $id);
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            $query = "DELETE FROM wikis WHERE id = :id";
+
+            $stmt = $this->conn->prepare($query);
+
+
+            $id = htmlspecialchars(strip_tags($id));
+            $stmt->bindParam(":id", $id);
+            return $stmt->execute();
+        }
+        
     }
-    public function getLastCategories () {
+    public function getLastCategories()
+    {
         $query = "SELECT * FROM categories ORDER BY id DESC LIMIT 4";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getArticles () {
+    public function getArticles()
+    {
         $query = "SELECT * FROM `wikis` JOIN categories ON wikis.id = categories.id ORDER BY `wikis`.`CategorieId` ASC LIMIT 4";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getCrudArticles () {
-        $query = "SELECT *,tags.Nom tagName FROM wikis JOIN categories ON wikis.id = categories.id JOIN wikitag ON wikis.id = wikitag.WikiId JOIN tags on wikis.id= tags.id";
+    public function getCrudArticles()
+    {
+        $query = "SELECT wikis.*, categories.Nom AS categoryName, tags.Nom AS tagName FROM wikis LEFT JOIN categories ON wikis.id = categories.id LEFT JOIN wikitag ON wikis.id = wikitag.WikiId LEFT JOIN tags ON wikitag.TagId = tags.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getTag(){
+    public function getTag()
+    {
 
         $query = "SELECT * FROM tags";
         $stmt = $this->conn->prepare($query);

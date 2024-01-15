@@ -97,7 +97,7 @@ class ArticleController
             $result = $this->articleModel->delete($id);
 
             if ($result) {
-                header('Location: ../index.php?status=deletesuccess');
+                header('Location: ../views/pages/authorWiki.php?status=deletesuccess');
             } else {
                 header('Location: ../index.php?status=deleteerror');
             }

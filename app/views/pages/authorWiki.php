@@ -163,7 +163,7 @@
                             <td><?=$wiki["content"]?></td>
                             <td><?=$wiki["tagName"]?></td>
                             <td><?=$wiki["description"]?></td>
-                            <td><?=$wiki["Nom"]?></td>
+                            <td><?=$wiki["categoryName"]?></td>
                             <td>
                                 <!-- <a></a> -->
                                 <!-- <a class="add" title="Add" data-toggle="tooltip"  href=""><i class="material-icons">&#xE03B;</i></a> -->

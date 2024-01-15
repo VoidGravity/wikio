@@ -5,7 +5,7 @@ include '../helpers/functions.php';
 
 class ArticleController {
     private $articleModel;
-  
+    
 
     public function __construct($db) {
         $this->articleModel = new ArticleModel($db);
@@ -76,6 +76,4 @@ class ArticleController {
         }
     }
 
-    // Methods for read, update, and delete operations
-    // ...
 }

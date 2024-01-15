@@ -1,15 +1,20 @@
 <?php
-include '../model/article.php';
-// include 'app\model\Article.php';
-include '../helpers/functions.php';
+require_once __DIR__.'/../model/article.php';
+
+
+include __DIR__.'/../helpers/functions.php';
 
 class ArticleController {
     private $articleModel;
     
 
+    // public function __construct($db) {
+    //     $this->articleModel = new ArticleModel($db);
+    // }
     public function __construct($db) {
         $this->articleModel = new ArticleModel($db);
     }
+    
 
     // Method to create an article
     public function create() {

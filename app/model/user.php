@@ -1,6 +1,6 @@
 <?php
 
-class User extends Database
+class User
 {
 
     private $conn;

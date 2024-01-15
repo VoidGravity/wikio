@@ -1,12 +1,10 @@
 <?php
-class ArticleModel
+require_once "connect.php";
+class ArticleModel extends Database
 {
-    private $conn;
+    
 
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
+    
 
     public function create($title, $content, $author_id, $category_id, $tags)
     {
@@ -51,7 +49,7 @@ class ArticleModel
     }
     public function getCategories()
     {
-        $query = "SELECT * FROM categories"; // Replace 'categories' with your actual table name
+        $query = "SELECT * FROM categories"; 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 

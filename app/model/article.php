@@ -27,17 +27,17 @@ class ArticleModel extends Database
             $stmt->execute();
             $articleId = $this->conn->lastInsertId();
 
-            // if (!empty($tags)) {
-            //     $query = "INSERT INTO tags (article_id, tag_id) VALUES (:article_id, :tag_id)";
-            //     $stmt = $this->conn->prepare($query);
+            if (!empty($tags)) {
+                $query = "INSERT INTO wikitag (WikiId, TagId) VALUES (:article_id, :tag_id)";
+                $stmt = $this->conn->prepare($query);
 
-            //     foreach ($tags as $tagId) {
-            //         $tagId = htmlspecialchars(strip_tags($tagId));
-            //         $stmt->bindParam(":article_id", $articleId);
-            //         $stmt->bindParam(":tag_id", $tagId);
-            //         $stmt->execute();
-            //     }
-            // }
+                foreach ($tags as $tagId) {
+                    $tagId = htmlspecialchars(strip_tags($tagId));
+                    $stmt->bindParam(":article_id", $articleId);
+                    $stmt->bindParam(":tag_id", $tagId);
+                    $stmt->execute();
+                }
+            }
 
             $this->conn->commit();
             return true;
@@ -60,7 +60,7 @@ class ArticleModel extends Database
     public function read($id)
     {
 
-        $query = "SELECT *,tags.Nom tagName FROM wikis JOIN categories ON wikis.id = categories.id JOIN wikitag ON wikis.id = wikitag.WikiId JOIN tags on wikis.id= tags.id where wikis.id = :id";
+        $query = "SELECT *,tags.Nom tagName FROM wikis left JOIN categories ON wikis.id = categories.id left JOIN wikitag ON wikis.id = wikitag.WikiId left JOIN tags on wikis.id= tags.id where wikis.id = :id";
         $stmt = $this->conn->prepare($query);
 
         $id = htmlspecialchars(strip_tags($id));
@@ -72,7 +72,7 @@ class ArticleModel extends Database
 
     public function update($id, $title, $content, $category_id)
     {
-        $query = "UPDATE wikio SET title = :title, content = :content, category_id = :category_id WHERE id = :id";
+        $query = "UPDATE wikis SET title = :title, content = :content, CategorieId = :category_id WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
         $id = htmlspecialchars(strip_tags($id));
@@ -116,14 +116,14 @@ class ArticleModel extends Database
     }
     public function getArticles()
     {
-        $query = "SELECT * FROM `wikis` JOIN categories ON wikis.id = categories.id ORDER BY `wikis`.`CategorieId` ASC LIMIT 4";
+        $query = "SELECT * FROM `wikis` left JOIN categories ON wikis.id = categories.id ORDER BY `wikis`.`CategorieId` ASC LIMIT 4";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getCrudArticles()
     {
-        $query = "SELECT wikis.*, categories.Nom AS categoryName, tags.Nom AS tagName FROM wikis LEFT JOIN categories ON wikis.id = categories.id LEFT JOIN wikitag ON wikis.id = wikitag.WikiId LEFT JOIN tags ON wikitag.TagId = tags.id";
+        $query = "SELECT wikis.*, categories.Nom AS categoryName, tags.Nom AS tagName FROM wikis LEFT JOIN categories ON wikis.CategorieId = categories.id LEFT JOIN wikitag ON wikis.id = wikitag.WikiId LEFT JOIN tags ON wikitag.TagId = tags.id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -132,6 +132,21 @@ class ArticleModel extends Database
     {
 
         $query = "SELECT * FROM tags";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getArticleById($id){
+        $query = "SELECT wikis.*, categories.Nom AS categoryName, tags.Nom AS tagName,tags.id AS tagId FROM wikis LEFT JOIN categories ON wikis.CategorieId = categories.id LEFT JOIN wikitag ON wikis.id = wikitag.WikiId LEFT JOIN tags ON wikitag.TagId = tags.id WHERE wikis.id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function search($search){
+        $query = "SELECT * FROM wikis WHERE wikis.title LIKE '%$search%' OR wikis.content LIKE '%$search%'";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

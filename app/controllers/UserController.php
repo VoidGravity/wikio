@@ -1,8 +1,8 @@
 <?php
 
 
-include "../model/connection.php";
-include "../model/user.php";
+require_once __DIR__."/../model/connection.php";
+require_once __DIR__."/../model/user.php";
 class UserController
 {
     private $userModel;

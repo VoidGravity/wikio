@@ -75,6 +75,7 @@
 
                             <div class="card-footer p-0 text-center">
                                 <a href="single-post.php?id=<?=$article['id']?>" class="btn btn-outline-dark btn-sm">READ MORE</a>
+                                <?=$article['id']?>   
                             </div>
                         </div>
                     </div>

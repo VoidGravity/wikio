@@ -53,7 +53,7 @@
                 </p>
 
                 <?php 
-                foreach ($Thedata['articles'] as $article) { ?>
+                foreach ($Thedata['articlesCrud'] as $article) { ?>
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -61,7 +61,7 @@
                             <div class="card-header p-0">
                                 <div class="blog-media">
                                     <img src="../../../public/imgs/blog-2.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary"><?=$article["Nom"]?></a>
+                                    <a href="#" class="badge badge-primary"><?=$article["categoryName"]?></a>
                                 </div>
                             </div>
                             <div class="card-body px-0">

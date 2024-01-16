@@ -1,3 +1,8 @@
+<?php
+require_once "../../controllers/wikiController.php";
+$wiki = new ArticleController();
+$getCat = $wiki->getCategories();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +78,7 @@
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
                                 <div class="mx-n1">
-                                    <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <a href="add-category.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
@@ -105,20 +110,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            1324
-                                        </td>
-                                        <td>
-                                            Feb 15, 2021
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-neutral">Edit</a>
-                                            <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($getCat as $cat) { ?>
+                                        <tr>
+                                            <td>
+                                                <?= $cat['id'] ?>
+                                            </td>
+                                            <td>
+                                                <?= $cat['Nom'] ?>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="edit-category.php?CatEdit=<?=$cat['id']?>" class="btn btn-sm btn-neutral">Edit</a>
+                                                <a href="../../controllers/wikiController.php?CatDelate=<?=$cat['id']?>" class="btn btn-sm btn-neutral">Delate</a>
+                                                <!-- <button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                                    <i class="bi bi-trash"></i>
+                                                </button> -->
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

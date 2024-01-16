@@ -68,16 +68,17 @@
                         <div class="row align-items-center">
                             <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                                 <!-- Title -->
-                                <h1 class="h2 mb-0 ls-tight">Categories</h1>
+                                <h1 class="h2 mb-0 ls-tight">Tags</h1>
                             </div>
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
+
                                 <div class="mx-n1">
                                     <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
-                                        <span>New category</span>
+                                        <span>New Tag</span>
                                     </a>
                                 </div>
                             </div>
@@ -92,17 +93,20 @@
             <!-- Main -->
             <main class="py-6 bg-surface-secondary">
                 <div class="container-fluid">
+                    <p class="form-label">Add</p>
                     <div class="card shadow border-0 mb-7">
-                        <form action="" class="p-3">
+                        <form method="post" action="../../controllers/wikiController.php" class="p-3">
                             <div class="form-group mb-3">
                                 <label for="" class="form-label">Name:</label>
-                                <input type="text" class="form-control">
+                                <input name="TagName" type="text" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary w-100">Add new</button>
+                                <button name="addTag" type="submit" class="btn btn-primary w-100">Add Tag</button>
                             </div>
                         </form>
                     </div>
+                    
+
                 </div>
             </main>
         </div>

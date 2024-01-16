@@ -1,3 +1,9 @@
+<?php
+require_once "../../controllers/wikiController.php";
+
+$wiki = new ArticleController();
+$cats = $wiki->getCatById($_GET['CatEdit']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -72,12 +78,13 @@
                             </div>
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
+
                                 <div class="mx-n1">
                                     <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
-                                        <span>New category</span>
+                                        <span>New Tag</span>
                                     </a>
                                 </div>
                             </div>
@@ -94,16 +101,22 @@
                 <div class="container-fluid">
                     <p class="form-label">Add</p>
                     <div class="card shadow border-0 mb-7">
-                        <form method="post" action="../../controllers/wikiController.php" class="p-3">
+                        <form method="post" action="../../controllers/wikiController.php?catId=<?=$cats["id"]?>" class="p-3">
                             <div class="form-group mb-3">
                                 <label for="" class="form-label">Name:</label>
-                                <input name="CategoryName" type="text" class="form-control">
+                                <input name="CatName" type="text" class="form-control" value="<?=$cats["Nom"]?>">
+                                    <!-- //hidden input to send id -->
+                                    <input name="CatEdit" type="hidden" class="form-control" value="<?=$cats["id"]?>">
+                                    
+                            </div>
                             </div>
                             <div class="form-group mb-3">
-                                <button name="addCategory" type="submit" class="btn btn-primary w-100">Add new</button>
+                                <button name="editCat" type="submit" class="btn btn-primary w-100">Submit Edit</button>
                             </div>
                         </form>
                     </div>
+                    
+
                 </div>
             </main>
         </div>

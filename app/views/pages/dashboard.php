@@ -1,3 +1,12 @@
+<?php
+
+require_once "../../controllers/wikiController.php";
+$Wikicontroller = new ArticleController();
+$catCount = $Wikicontroller->getCategorieCount();
+$wikiCount = $Wikicontroller->getWikiCount();
+$userCount = $Wikicontroller->getUserCount();
+$tagCount = $Wikicontroller->getTagCount();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,31 +67,11 @@
                     <!-- Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-house"></i> Dashboard
+                            <a class="nav-link" href="no-sidebar.php">
+                                <i class="bi bi-house"></i> Home
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-bar-chart"></i> Analitycs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-chat"></i> Messages
-                                <span class="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-bookmarks"></i> Collections
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-people"></i> Users
-                            </a>
-                        </li>
+                        
                     </ul>
                     <!-- Divider -->
                     <hr class="navbar-divider my-5 opacity-20">
@@ -91,13 +80,9 @@
                     <div class="mt-auto"></div>
                     <!-- User (md) -->
                     <ul class="navbar-nav">
+                        
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-person-square"></i> Account
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../../controllers/UserController.php?action=logout">
                                 <i class="bi bi-box-arrow-left"></i> Logout
                             </a>
                         </li>
@@ -119,14 +104,16 @@
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
                                 <div class="mx-n1">
-                                    <a href="#" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                                    <a href="tags.php" class="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
                                         <span class=" pe-2">
-                                            <i class="bi bi-pencil"></i>
+                                            <!-- <i class="bi bi-pencil"></i> -->
+                                            <i class="bi bi-plus"></i>
                                         </span>
                                         <span>Tags</span>
                                     </a>
-                                    <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <a href="categories.php" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                         <span class=" pe-2">
+                                            
                                             <i class="bi bi-plus"></i>
                                         </span>
                                         <span>Categories</span>
@@ -152,8 +139,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="h6 font-semibold text-muted text-sm d-block mb-2">Users</span>
-                                            <span class="h3 font-bold mb-0">9</span>
-                                        </div>
+                                                <span class="h3 font-bold mb-0"><?=$userCount[0]["userCount"]?></span>
+                                        </div>  
+                                        
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
                                                 <i class="bi bi-people"></i>
@@ -169,7 +157,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="h6 font-semibold text-muted text-sm d-block mb-2">Tags</span>
-                                            <span class="h3 font-bold mb-0">215</span>
+                                            <span class="h3 font-bold mb-0"><?=$tagCount[0]["tagCount"]?></span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
@@ -186,7 +174,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="h6 font-semibold text-muted text-sm d-block mb-2">Categories</span>
-                                            <span class="h3 font-bold mb-0">40</span>
+                                            <span class="h3 font-bold mb-0"><?=$catCount[0]["categoryCount"]?></span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
@@ -203,7 +191,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="h6 font-semibold text-muted text-sm d-block mb-2">Wikis</span>
-                                            <span class="h3 font-bold mb-0">95</span>
+                                            <span class="h3 font-bold mb-0"><?=$wikiCount[0]["wikiCount"]?></span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">

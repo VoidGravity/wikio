@@ -2,7 +2,7 @@
 
 class Database {
     private $host = "localhost";
-    private $db_name = "wikio";
+    private $db_name = "wikioextra";
     private $username = "root";
     private $password = "";
     public $conn;

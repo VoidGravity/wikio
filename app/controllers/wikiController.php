@@ -72,6 +72,105 @@ class ArticleController
     {
         return $this->articleModel->getTag();
     }
+    public function getCategorieCount()
+    {
+        $catcount = $this->articleModel->getCategorieCount();
+        return $catcount;
+    }
+    public function getWikiCount()
+    {
+        $artcount = $this->articleModel->getWikiCount();
+        return $artcount;
+    }
+    
+    public function getTagCount()
+    {
+        $tagcount = $this->articleModel->getTagCount();
+        return $tagcount;
+    }
+    public function getUserCount()
+    {
+        $usercount = $this->articleModel->getUserCount();
+        return $usercount;
+    }
+    public function getTags()
+    {
+        $tags = $this->articleModel->getTags();
+        return $tags;
+    }
+    public function getCategories()
+    {
+        $tags = $this->articleModel->getCategories();
+        return $tags;
+    }
+    public function getTagById($id)
+    {
+        $tag = $this->articleModel->getTagById($id);
+        return $tag;
+    }
+    public function getCatById($id)
+    {
+        $tag = $this->articleModel->getCatById($id);
+        return $tag;
+    }
+    public function delateTags($id){
+        
+           
+            
+            $result = $this->articleModel->delateTags($id);
+            if ($result) {
+                header('Location:../views/pages/tags.php?status=deletesuccess&EAWid='.$id);
+            } else {
+                header('Location:../views/pages/tags.php?status=deleteerror&EAWid='.$id);
+            }
+    }
+    public function delateCat($id){
+        
+           
+            
+            $result = $this->articleModel->delateCat($id);
+            if ($result) {
+                header('Location:../views/pages/categories.php?status=deletesuccess&EAWid='.$id);
+            } else {
+                header('Location:../views/pages/categories.php?status=deleteerror&EAWid='.$id);
+            }
+    }
+    public function editTags($id,$tag){
+        $result = $this->articleModel->editTag($id,$tag);
+        if ($result) {
+            header('Location: ../views/pages/dashboard.php?status=updatesuccess&EAWid='.$id);
+        } else {
+            header('Location: ../views/pages/editeAuthorWiki.php?status=updateerror&EAWid='.$id);
+        }
+        
+    }
+    public function editCat($id,$tag){
+        $result = $this->articleModel->editCat($id,$tag);
+        if ($result) {
+            header('Location: ../views/pages/dashboard.php?status=updatesuccess&EAWid='.$id);
+        } else {
+            header('Location: ../views/pages/editeAuthorWiki.php?status=updateerror&EAWid='.$id);
+        }
+        
+    }
+    public function addTag($tag){
+        $result = $this->articleModel->addTag($tag);
+        if ($result) {
+            header('Location: ../views/pages/dashboard.php?status=updatesuccess&EAWid='.$tag);
+        } else {
+            header('Location: ../views/pages/editeAuthorWiki.php?status=updateerror&EAWid='.$tag);
+        }
+        
+    }
+    public function addCat($cat){
+        $result = $this->articleModel->addCat($cat);
+        if ($result) {
+            header('Location: ../views/pages/dashboard.php?status=updatesuccess&EAWid='.$cat);
+        } else {
+            header('Location: ../views/pages/editeAuthorWiki.php?status=updateerror&EAWid='.$cat);
+        }
+        
+    }
 
     public function getNoSideBarData()
     {
@@ -131,4 +230,38 @@ if (isset($_POST['updateArticle'])) {
 if (isset($_GET['action']) && $_GET['action'] == 'search') {
     $article = new ArticleController();
     echo json_encode($article->search($_GET['value']));
+}
+
+if (isset($_GET["tagId"])) {
+    $id = $_GET["tagId"];
+    $tag = $_POST["TagName"];
+    $article = new ArticleController();
+    $article->editTags($id,$tag);
+}
+if (isset($_GET["catId"])) {
+    $id = $_GET["catId"];
+    $tag = $_POST["CatName"];
+    $article = new ArticleController();
+    //make the new model
+    $article->editCat($id,$tag);
+}
+if (isset($_GET["TagDelate"])) {
+    $id = $_GET["TagDelate"];
+    $article = new ArticleController();
+    $article->delateTags($id);
+}
+if (isset($_GET["CatDelate"])) {
+    $id = $_GET["CatDelate"];
+    $article = new ArticleController();
+    $article->delateCat($id);
+}
+if (isset($_POST["addTag"])) {
+    $tag = $_POST["TagName"];
+    $article = new ArticleController();
+    $article->addTag($tag);
+}
+if (isset($_POST["addCategory"])) {
+    $tag = $_POST["CategoryName"];
+    $article = new ArticleController();
+    $article->addCat($tag);
 }
